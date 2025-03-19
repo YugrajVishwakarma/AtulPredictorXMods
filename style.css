@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: url("https://i.pinimg.com/564x/4c/17/cd/4c17cd59fcdc235ab177f9f564fabdc5.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styling */
+.container {
+    background: rgba(0, 0, 0, 0.55); /* Pehle 0.85 tha, ab 0.55 kiya */
+    padding: 5%;
+    border-radius: 2vw;
+    margin: 5vh auto;
+    width: 90%;
+    max-width: 75vw;
+    box-shadow: 0 0 2vw rgba(0, 255, 255, 0.6);
+    border: 0.4vw solid rgba(0, 255, 255, 0.9);
+    text-shadow: 0 0 1.5vw cyan;
+    animation: neonPulse 2s infinite alternate;
+}
+
+/* Neon Pulse Animation */
+@keyframes neonPulse {
+    0% { box-shadow: 0 0 2vw cyan; }
+    50% { box-shadow: 0 0 3vw cyan; }
+    100% { box-shadow: 0 0 2vw cyan; }
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 5vw;
+    color: cyan;
+    text-shadow: 0 0 1.5vw cyan, 0 0 2.5vw cyan;
+    letter-spacing: 0.3vw;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Prediction Box */
+.prediction-box {
+    background: rgba(0, 0, 0, 0.4); /* Pehle 0.75 tha, ab 0.4 kiya */
+    padding: 4%;
+    border-radius: 2vw;
+    border: 0.35vw solid rgba(255, 0, 0, 0.9);
+    box-shadow: 0 0 1.8vw red;
+    text-shadow: 0 0 1vw red;
+    font-size: 3.5vw;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.prediction-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 2.5vw red;
+}
+
+/* Paragraph Styling */
+p {
+    font-size: 3vw;
+    margin: 3vh 0;
+}
+
+/* Prediction History */
+#historyList {
+    max-height: 45vh;
+    overflow-y: auto;
+    padding: 3%;
+}
+
+/* History Item */
+.history-item {
+    background: rgba(255, 255, 255, 0.2); /* Pehle 0.15 tha, ab 0.2 kiya */
+    padding: 4%;
+    margin: 2.5% 0;
+    border-radius: 1.5vw;
+    border: 0.3vw solid cyan;
+    box-shadow: 0 0 1.5vw cyan;
+    font-size: 3vw;
+    text-shadow: 0 0 1vw cyan;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.history-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 2vw cyan;
+}
+
+/* Developer Text */
+.developer {
+    margin-top: 4vh;
+    font-size: 2vw;
+    color: cyan;
+    text-shadow: 0 0 1vw cyan;
+}
+
+/* Developer Link */
+.dev-link {
+    color: cyan;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 0.2vw solid blue;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.dev-link:hover {
+    color: yellow;
+    border-bottom: 0.2vw solid yellow;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 6vw;
+    }
+    p {
+        font-size: 4vw;
+    }
+    .prediction-box {
+        font-size: 4vw;
+    }
+    .history-item {
+        font-size: 3.5vw;
+    }
+    .developer {
+        font-size: 3vw;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 60vw;
+    }
+    h1 {
+        font-size: 4vw;
+    }
+    p {
+        font-size: 3vw;
+    }
+    .prediction-box {
+        font-size: 3vw;
+    }
+    .history-item {
+        font-size: 2.5vw;
+    }
+}
