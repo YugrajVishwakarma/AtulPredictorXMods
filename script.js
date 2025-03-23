@@ -1,20 +1,23 @@
 let historyData = [];
-let timer = 60;
 let lastFetchedPeriod = 0;
 let totalWins = 0, totalLosses = 0;
 
+// ✅ Real-time 60-second sync
 function updateTimer() {
-    timer--;
-    document.getElementById("timer").innerText = timer;
+    let now = new Date();
+    let seconds = now.getUTCSeconds();
+    let remainingSeconds = 60 - seconds;
 
-    if (timer <= 0) {
-        timer = 60;
-        updatePrediction();
+    document.getElementById("timer").innerText = remainingSeconds;
+
+    if (remainingSeconds === 60) {
+        updatePrediction(); // Fetch data exactly when 60 seconds reset
     }
+
+    setTimeout(updateTimer, 1000);
 }
 
-setInterval(updateTimer, 1000);
-
+// ✅ Fetch latest game result
 async function fetchGameResult() {
     try {
         const response = await fetch("https://api.bdg88zf.com/api/webapi/GetNoaverageEmerdList", {
@@ -31,9 +34,7 @@ async function fetchGameResult() {
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         let data = await response.json();
         let latestResult = data?.data?.list?.[0];
@@ -45,16 +46,19 @@ async function fetchGameResult() {
     }
 }
 
+// ✅ Predict based on history
 function trendAnalysis(history) {
     let bigCount = history.filter(item => item.result >= 5).length;
     let smallCount = history.filter(item => item.result < 5).length;
     return bigCount > smallCount ? "BIG" : "SMALL";
 }
 
+// ✅ Auto Prediction System
 function autoPredict() {
     return { type: trendAnalysis(historyData) };
 }
 
+// ✅ Update Prediction & History
 async function updatePrediction() {
     let apiResult = await fetchGameResult();
 
@@ -66,12 +70,19 @@ async function updatePrediction() {
         document.getElementById("currentPeriod").innerText = currentPeriod;
         document.getElementById("prediction").innerText = prediction.type;
 
-        historyData.unshift({ period: currentPeriod, result: apiResult.result, prediction: prediction.type, resultStatus: "Pending" });
+        historyData.unshift({ 
+            period: currentPeriod, 
+            result: apiResult.result, 
+            prediction: prediction.type, 
+            resultStatus: "Pending" 
+        });
+
         updateHistory();
         checkWinLoss(apiResult);
     }
 }
 
+// ✅ Check Win/Loss Status
 function checkWinLoss(apiResult) {
     if (!apiResult) return;
 
@@ -86,6 +97,7 @@ function checkWinLoss(apiResult) {
     updateHistory();
 }
 
+// ✅ Update Statistics
 function updateStats() {
     totalWins = historyData.filter(item => item.resultStatus === "WIN").length;
     totalLosses = historyData.filter(item => item.resultStatus === "LOSS").length;
@@ -96,6 +108,7 @@ function updateStats() {
     document.getElementById("accuracy").innerText = accuracy.toFixed(2) + '%';
 }
 
+// ✅ Update History Display
 function updateHistory() {
     let historyDiv = document.getElementById("historyList");
     historyDiv.innerHTML = "";
@@ -108,6 +121,7 @@ function updateHistory() {
     });
 }
 
+// ✅ Start the real-time timer
+updateTimer();
 updatePrediction();
-
-
+            
